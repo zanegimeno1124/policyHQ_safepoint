@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   
   // Initialize token from localStorage if available, otherwise use dev default
   const [token, setToken] = useState<string | null>(() => {
-    return localStorage.getItem('authToken') || "eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.yZeAJ0dQLw_vpoOXSLgEVcRYC_aI1K2ykE4IA9VpabUQ-QeQffts1CmmjuepOXjgPg0NJbQCkDLz9xVCTqAPj9QQJMzKNsBt.JTBM0Pd9hNc886n-_Sy5aA.iXxNCLMPFMvZr34_YluCfT6fZp2WmHZ-c5r8czN0B304XcjhLFH1ymbpder2JOkdQ_UWJ_mFcx25BMqWcrdiLvODVV8ryVO3djKn8uITNgJcT6o6BmLw9fd5w_ojkS66VmPiIK3S_m3XU2AGkZNBTWS2pryOVfEc6zguvg0_-JzVMYZJnXAhkKJM8_dhUdmL.doH_ISvq0mYIGQ8F4mnZKa4oKkS4CCkMA1cpbucb6_o";
+    return localStorage.getItem('authToken');
   });
 
   const hasCheckedAutoLogin = useRef(false);
