@@ -116,6 +116,11 @@ export interface AgencyMeta {
   label: string;
 }
 
+export interface TeamMeta {
+  id: string;
+  label: string;
+}
+
 export interface AgentOverviewData {
   stats: DashboardStats;
   revenueTrend: RevenuePoint[];
@@ -131,11 +136,12 @@ export const agentOverviewApi = {
   /**
    * Fetches the submission summary for specific filters
    */
-  getSubmissionSummary: async (agencyId: string | null, startDate: number | null, endDate: number | null): Promise<SubmissionSummary> => {
+  getSubmissionSummary: async (agencyId: string | null, teamId: string | null, startDate: number | null, endDate: number | null): Promise<SubmissionSummary> => {
     const params = new URLSearchParams();
     if (startDate !== null) params.append('start_date', String(startDate));
     if (endDate !== null) params.append('end_date', String(endDate));
     if (agencyId) params.append('agency_id', agencyId);
+    if (teamId) params.append('team_id', teamId);
 
     const response = await fetch(`${BASE_URL}/leaderboard/submissionSummary?${params.toString()}`, {
       method: 'GET',
@@ -149,11 +155,12 @@ export const agentOverviewApi = {
   /**
    * Fetches the lead breakdown data
    */
-  getLeadBreakdown: async (agencyId: string | null, startDate: number | null, endDate: number | null): Promise<LeadBreakdownResponse> => {
+  getLeadBreakdown: async (agencyId: string | null, teamId: string | null, startDate: number | null, endDate: number | null): Promise<LeadBreakdownResponse> => {
     const params = new URLSearchParams();
     if (startDate !== null) params.append('start_date', String(startDate));
     if (endDate !== null) params.append('end_date', String(endDate));
     if (agencyId) params.append('agency_id', agencyId);
+    if (teamId) params.append('team_id', teamId);
 
     const response = await fetch(`${BASE_URL}/leaderboard/leadBreakdown?${params.toString()}`, {
       method: 'GET',
@@ -167,11 +174,12 @@ export const agentOverviewApi = {
   /**
    * Fetches the carrier performance breakdown
    */
-  getCarrierBreakdown: async (agencyId: string | null, startDate: number | null, endDate: number | null): Promise<CarrierBreakdown[]> => {
+  getCarrierBreakdown: async (agencyId: string | null, teamId: string | null, startDate: number | null, endDate: number | null): Promise<CarrierBreakdown[]> => {
     const params = new URLSearchParams();
     if (startDate !== null) params.append('start_date', String(startDate));
     if (endDate !== null) params.append('end_date', String(endDate));
     if (agencyId) params.append('agency_id', agencyId);
+    if (teamId) params.append('team_id', teamId);
 
     const response = await fetch(`${BASE_URL}/leaderboard/carrierBreakdown?${params.toString()}`, {
       method: 'GET',
@@ -228,12 +236,13 @@ export const agentOverviewApi = {
   /**
    * Fetches the all-time top closers leaderboard with date filtering
    */
-  getAllTimeLeaderboard: async (agencyId: string | null, startDate: number | null, endDate: number | null): Promise<AllTimeLeaderboardEntry[]> => {
+  getAllTimeLeaderboard: async (agencyId: string | null, teamId: string | null, startDate: number | null, endDate: number | null): Promise<AllTimeLeaderboardEntry[]> => {
     const params = new URLSearchParams();
     if (agencyId) params.append('agency_id', agencyId);
+    if (teamId) params.append('team_id', teamId);
     if (startDate !== null) params.append('start_date', String(startDate));
     if (endDate !== null) params.append('end_date', String(endDate));
-    
+
     const response = await fetch(`${BASE_URL}/leaderboard/all_time?${params.toString()}`, {
       method: 'GET',
       headers: authHeader(),
@@ -253,6 +262,19 @@ export const agentOverviewApi = {
     });
 
     if (!response.ok) throw new ApiError('Failed to fetch agencies metadata', response.status);
+    return response.json();
+  },
+
+  /**
+   * Fetches team metadata for filtering
+   */
+  getTeams: async (): Promise<TeamMeta[]> => {
+    const response = await fetch(`${BASE_URL}/meta/teams`, {
+      method: 'GET',
+      headers: authHeader(),
+    });
+
+    if (!response.ok) throw new ApiError('Failed to fetch teams metadata', response.status);
     return response.json();
   },
 

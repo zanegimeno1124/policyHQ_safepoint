@@ -8,7 +8,7 @@ interface AllClosersDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   data: AllTimeLeaderboardEntry[];
-  selectedAgencyLabel: string;
+  selectedLabel: string;
   dateRangeLabel: string;
 }
 
@@ -21,7 +21,7 @@ const getInitials = (name: string) => {
   return parts[0].substring(0, 2).toUpperCase();
 };
 
-export const ClosersDrawer: React.FC<AllClosersDrawerProps> = ({ isOpen, onClose, data, selectedAgencyLabel, dateRangeLabel }) => {
+export const ClosersDrawer: React.FC<AllClosersDrawerProps> = ({ isOpen, onClose, data, selectedLabel, dateRangeLabel }) => {
   const [search, setSearch] = useState('');
   const filtered = data.filter(entry => entry.agent_name.toLowerCase().includes(search.toLowerCase()));
 
@@ -29,12 +29,12 @@ export const ClosersDrawer: React.FC<AllClosersDrawerProps> = ({ isOpen, onClose
     const presets = ['Today', 'Yesterday', 'This Week', 'This Month', 'This Year', 'All Time'];
     if (presets.includes(dateRangeLabel)) {
       if (dateRangeLabel === 'All Time') {
-        return `${selectedAgencyLabel} All Time Rankings`;
+        return `${selectedLabel} All Time Rankings`;
       }
-      return `${selectedAgencyLabel} ${dateRangeLabel}'s Rankings`;
+      return `${selectedLabel} ${dateRangeLabel}'s Rankings`;
     }
-    return `${selectedAgencyLabel}'s Rankings`;
-  }, [selectedAgencyLabel, dateRangeLabel]);
+    return `${selectedLabel}'s Rankings`;
+  }, [selectedLabel, dateRangeLabel]);
 
   if (!isOpen) return null;
 

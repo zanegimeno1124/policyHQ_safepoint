@@ -7,13 +7,14 @@ import { agentOverviewApi, LeadBreakdownResponse } from '../../services/agentOve
 
 interface LeadInfoSectionProps {
   agencyId: string | null;
+  teamId: string | null;
   startDate: number | null;
   endDate: number | null;
 }
 
 const COLORS = ['#10b981', '#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#64748b', '#0ea5e9', '#f43f5e', '#84cc16'];
 
-export const LeadInfoSection: React.FC<LeadInfoSectionProps> = ({ agencyId, startDate, endDate }) => {
+export const LeadInfoSection: React.FC<LeadInfoSectionProps> = ({ agencyId, teamId, startDate, endDate }) => {
   const [data, setData] = useState<LeadBreakdownResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [hoveredSource, setHoveredSource] = useState<{
@@ -24,11 +25,11 @@ export const LeadInfoSection: React.FC<LeadInfoSectionProps> = ({ agencyId, star
 
   useEffect(() => {
     setLoading(true);
-    agentOverviewApi.getLeadBreakdown(agencyId, startDate, endDate)
+    agentOverviewApi.getLeadBreakdown(agencyId, teamId, startDate, endDate)
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [agencyId, startDate, endDate]);
+  }, [agencyId, teamId, startDate, endDate]);
 
   const sourceData = useMemo(() => {
     if (!data?.source) return [];

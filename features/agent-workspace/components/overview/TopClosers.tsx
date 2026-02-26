@@ -7,7 +7,7 @@ import { getAgencyName } from './utils';
 interface TopClosersProps {
   leaderboardData: AllTimeLeaderboardEntry[];
   loading: boolean;
-  selectedAgencyLabel: string;
+  selectedLabel: string;
   dateRangeLabel: string;
   onViewAll: () => void;
 }
@@ -93,10 +93,10 @@ const PodiumCircle = ({
   );
 };
 
-export const TopClosers: React.FC<TopClosersProps> = ({ 
-  leaderboardData, 
-  loading, 
-  selectedAgencyLabel,
+export const TopClosers: React.FC<TopClosersProps> = ({
+  leaderboardData,
+  loading,
+  selectedLabel,
   dateRangeLabel,
   onViewAll
 }) => {
@@ -113,8 +113,8 @@ export const TopClosers: React.FC<TopClosersProps> = ({
   const dynamicTitle = useMemo(() => {
     const presets = ['Today', 'Yesterday', 'This Week', 'This Month', 'This Year', 'All Time'];
     const label = presets.includes(dateRangeLabel) ? dateRangeLabel : 'Top';
-    return `${selectedAgencyLabel} ${label} Closers`;
-  }, [selectedAgencyLabel, dateRangeLabel]);
+    return `${selectedLabel} ${label} Closers`;
+  }, [selectedLabel, dateRangeLabel]);
 
   return (
     <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-[3rem] shadow-2xl h-full flex flex-col overflow-hidden relative group border border-white/5">

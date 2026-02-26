@@ -5,13 +5,15 @@ import { CarrierBreakdown } from '../../services/agentOverviewApi';
 interface CarrierSectionProps {
   carrierBreakdown: CarrierBreakdown[];
   loading: boolean;
+  selectedLabel: string;
   onViewAll: () => void;
 }
 
-export const CarrierSection: React.FC<CarrierSectionProps> = ({ 
-  carrierBreakdown, 
-  loading, 
-  onViewAll 
+export const CarrierSection: React.FC<CarrierSectionProps> = ({
+  carrierBreakdown,
+  loading,
+  selectedLabel,
+  onViewAll
 }) => {
   const sortedCarriers = useMemo(() => {
     return [...carrierBreakdown].sort((a, b) => b.total_premium - a.total_premium);

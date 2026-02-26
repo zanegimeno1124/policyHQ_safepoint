@@ -7,7 +7,7 @@ interface TeamSalesSectionProps {
   teamRankingData: TeamRankingEntry[];
   loading: boolean;
   dateRangeLabel: string;
-  selectedAgencyLabel: string;
+  selectedLabel: string;
   onViewAll: () => void;
 }
 
@@ -44,11 +44,11 @@ const AchievementBadge = ({ type }: { type: 'gold' | 'blue' | 'purple' | 'red' }
   );
 };
 
-export const TeamSalesSection: React.FC<TeamSalesSectionProps> = ({ 
-  teamRankingData, 
+export const TeamSalesSection: React.FC<TeamSalesSectionProps> = ({
+  teamRankingData,
   loading,
   dateRangeLabel,
-  selectedAgencyLabel,
+  selectedLabel,
   onViewAll
 }) => {
   const sortedData = useMemo(() => {
@@ -57,13 +57,13 @@ export const TeamSalesSection: React.FC<TeamSalesSectionProps> = ({
 
   const { featuredEntry, featuredRank } = useMemo(() => {
     if (sortedData.length === 0) return { featuredEntry: null, featuredRank: '—' };
-    const index = sortedData.findIndex(e => e.name === selectedAgencyLabel);
+    const index = sortedData.findIndex(e => e.name === selectedLabel);
     const actualIndex = index !== -1 ? index : 0;
     return {
       featuredEntry: sortedData[actualIndex],
       featuredRank: actualIndex + 1
     };
-  }, [sortedData, selectedAgencyLabel]);
+  }, [sortedData, selectedLabel]);
 
   // Filter the topList to exclude the featured agency to avoid duplicates
   const topList = useMemo(() => {
